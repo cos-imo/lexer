@@ -1,6 +1,6 @@
-from numpy import numpy as np
+with Ada.Text IO;
 
-def init():
-    var = 1
-    if var== 2 :
-        print("ok")
+procedure Hello is
+begin
+    Ada.Text IO.Put Line(”Hello, Ada!”);
+end Hello;
