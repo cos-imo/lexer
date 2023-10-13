@@ -7,13 +7,9 @@ def main():
     lexemes=[]
 
     for line in data:
-        for token in line.split(' '):
-            if token.isdigit():
-                lexemes.append(("integer", token))
-            elif token in operators:
-                lexemes.append(("operator", token))
-
-    print(lexemes)
+        for character in line:
+            if line.index(character)<len(line):
+                print(character)
 
 if __name__=='__main__':
     main()
