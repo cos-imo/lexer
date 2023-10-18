@@ -24,12 +24,10 @@ def main():
                     string_active=1
                 if string_active:
                     if line[i+1]=='"':
-                        lexemes.append(("string", lexeme))
+                        lexemes.append(("string", lexeme + '"'))
                         lexeme=''
                         string_active=0
-                    else:
-                        continue
-                if line[i+1]==' ' or line[i+1]=='\n'or lexeme in keywords or line[i+1] in symbols:
+                elif line[i+1]==' ' or line[i+1]=='\n'or lexeme in keywords or line[i+1] in symbols:
                     if lexeme in keywords:
                         lexemes.append(("keyword",lexeme))
                     elif lexeme.isdigit():
@@ -45,11 +43,16 @@ def main():
 
     lexemes=[(element1, element2) for (element1, element2) in lexemes if element2!='']
 
-    sys.stdout.write("Type \t\t\t| Value\n------------------------------------\n")
+    tab_separator="+----------------------------------------+"
+
+    sys.stdout.write(tab_separator + "\n|Type  \t\t\t | Value\t |\n{}\n".format(tab_separator))
 
     for (element1, element2) in lexemes:
         space=(24-len(element1))*' '
-        sys.stdout.write("{}".format(element1) + space + "|{}\n".format(element2))
+        space2=(15-len(element2))*' '
+        sys.stdout.write("|{}".format(element1) + space + "|{}{}|\n".format(element2, space2))
+    
+    sys.stdout.write(tab_separator)
 
 if __name__=='__main__':
     main()
