@@ -6,6 +6,7 @@ operators=['if', 'else', 'elif', 'while']
 symbols = ['{', '}', '(', ')', '[', ']', '.', '"', '*', '\n', ':', ',', ';']
 other_symbols = ['\\', '/*', '*/']
 keywords = ['with', 'procedure', 'is', 'IO', 'begin', 'end', 'Line']
+
 procedure_names=[]
 KEYWORDS = symbols + other_symbols + keywords
 
@@ -26,7 +27,7 @@ def main():
                         lexemes.append(("string", lexeme))
                         lexeme=''
                     string_active=1-string_active
-                if (line[i+1]==' ' or line[i+1]=='\n'or lexeme in keywords or line[i+1] in symbols) and not string_active:
+                if (line[i+1]==' ' or line[i+1]=='\n'or lexeme in keywords or line[i+1] in symbols) and not string_active and not (lexeme=="Ada") and not line[i+1]==".":
                     if lexeme in keywords:
                         lexemes.append(("keyword",lexeme))
                     elif lexeme.isdigit():
@@ -35,6 +36,10 @@ def main():
                         lexemes.append(("symbol", lexeme))
                     elif lexeme in procedure_names:
                         lexemes.append(("string (procedure name)", lexeme))
+                    elif lexeme[0:4]=="Ada.":
+                        lexemes.append(("Ada module", lexeme))
+                    elif lexeme[0:3]=="IO.":
+                        lexemes.append(("Ada module", lexeme))
                     else:
                         if lexemes[-1][1]=="procedure":
                             lexemes.append(("string(proc. name)(d)", lexeme))
